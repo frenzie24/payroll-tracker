@@ -1,9 +1,40 @@
 // Get a reference to the #add-employees-btn element
 const addEmployeesBtn = document.querySelector('#add-employees-btn');
-
 // Collect employee data
 const collectEmployees = function () {
   // TODO: Get user input to create and return an array of employee objects
+  let employees = [employeeGenerator()];
+  // stores the response from our confirm
+  let addMore = confirm("Enter more employees?");
+  if (addMore) {
+    employees.push(employeeGenerator());
+  } else {
+    return employees;
+  }
+}
+
+// function to check if prompt input is a number, 
+const checkForNumbers = function (input, msg) {
+  if (!parseFloat(input)) {
+    return checkForNumbers(prompt(msg, 'Try again.'));
+  } else { return input };
+}
+
+ // function to check if prompt input is full of letters
+const checkForLetters = function (input, msg) {
+  if (parseInt(input)) {
+    return checkForLetters(prompt(msg, 'Try again.'));
+  } else { return input };
+}
+// employee generator using prompts
+employeeGenerator = function () {
+  let promptString = 'Enter employee\'s';
+  return {
+    firstName: checkForLetters(prompt(`${promptString} first name.`, 'First Name')),
+    lastName: checkForLetters(prompt(`${promptString}  last name.`, 'Last Name')),
+    salary: checkForNumbers(prompt(`${promptString}  salary.`, 'Salary'),
+      'Salary')
+  };;
 }
 
 // Display the average salary
@@ -14,6 +45,9 @@ const displayAverageSalary = function (employeesArray) {
 // Select a random employee
 const getRandomEmployee = function (employeesArray) {
   // TODO: Select and display a random employee
+  // creates a var called rand that creates and stores a 
+  // random int between 0 and employeesArray.length - 1
+  let rand = Math.floor(Math.random() * employeesArray.length);
 }
 
 /*
@@ -67,23 +101,20 @@ const trackEmployeeData = function () {
   console.log('==============================');
 
   getRandomEmployee(employees);
-  //this throws an error if employees are null or undefined
-  try {
-    employees.sort(function (a, b) {
-      if (a.lastName < b.lastName) {
-        return -1;
-      } else {
-        return 1;
-      }
-    });
 
-    displayEmployees(employees);
+  employees.sort(function (a, b) {
+    if (a.lastName < b.lastName) {
+      return -1;
+    } else {
+      return 1;
+    }
+  });
 
-  } catch (e) {
-    console.log(`Err Caught: ${e}`);
-  }
+  displayEmployees(employees);
 
- 
+
+
+
 }
 
 // Add event listener to 'Add Employees' button
