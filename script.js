@@ -20,10 +20,6 @@ const collectEmployees = function () {
   return employees;
 }
 
-const addMoreEmployeeData = function (employees) {
- 
-}
-
 // function to check if prompt input is a number, 
 const checkForNumbers = function (input, msg) {
   input = parseInt(input);
