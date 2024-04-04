@@ -5,41 +5,60 @@ const collectEmployees = function () {
   // TODO: Get user input to create and return an array of employee objects
   let employees = [employeeGenerator()];
   // stores the response from our confirm
-  let addMore = confirm("Enter more employees?");
-  if (addMore) {
-    employees.push(employeeGenerator());
-  } else {
-    return employees;
+  function addMorData() {
+    let addMore = confirm("Enter more employees?");
+    debugger;
+    if (addMore) {
+      // if true we call our function again and push the return to the employees array
+      employees.push(employeeGenerator());
+      addMorData();
+    } else {
+      return employees;
+    }
   }
+  addMorData();
+  return employees;
+}
+
+const addMoreEmployeeData = function (employees) {
+ 
 }
 
 // function to check if prompt input is a number, 
 const checkForNumbers = function (input, msg) {
-  if (!parseFloat(input)) {
+  input = parseInt(input);
+  if (!input) {
     return checkForNumbers(prompt(msg, 'Try again.'));
   } else { return input };
 }
 
- // function to check if prompt input is full of letters
+// function to check if prompt input is full of letters
 const checkForLetters = function (input, msg) {
-  if (parseInt(input)) {
+  if (parseInt(input)|| input == "First Name" || input == "Last Name") {
     return checkForLetters(prompt(msg, 'Try again.'));
   } else { return input };
 }
 // employee generator using prompts
 employeeGenerator = function () {
   let promptString = 'Enter employee\'s';
-  return {
+  // using string literals to make these lines more legible
+  let employee = {
     firstName: checkForLetters(prompt(`${promptString} first name.`, 'First Name')),
     lastName: checkForLetters(prompt(`${promptString}  last name.`, 'Last Name')),
     salary: checkForNumbers(prompt(`${promptString}  salary.`, 'Salary'),
       'Salary')
-  };;
+  };
+  return employee;
 }
 
 // Display the average salary
 const displayAverageSalary = function (employeesArray) {
-  // TODO: Calculate and display the average salary
+  let total = 0.0;
+  for (let i = 0; i < employeesArray.length; i++) {
+    total += employeesArray[i].salary;
+  }
+  total /= employeesArray.length;
+  console.log(`Average Employee Salary is: ${total}`);
 }
 
 // Select a random employee
@@ -48,6 +67,10 @@ const getRandomEmployee = function (employeesArray) {
   // creates a var called rand that creates and stores a 
   // random int between 0 and employeesArray.length - 1
   let rand = Math.floor(Math.random() * employeesArray.length);
+  let employee = employeesArray[rand];
+  console.log(`Here's random employee${employee.firstName}`);
+  console.log(employee);
+
 }
 
 /*
