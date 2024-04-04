@@ -30,7 +30,7 @@ const checkForNumbers = function (input, msg) {
 
 // function to check if prompt input is full of letters
 const checkForLetters = function (input, msg) {
-  if (parseInt(input)|| input == "First Name" || input == "Last Name") {
+  if (parseInt(input) || input == "First Name" || input == "Last Name") {
     return checkForLetters(prompt(msg, 'Try again.'));
   } else { return input };
 }
@@ -61,8 +61,10 @@ const displayAverageSalary = function (employeesArray) {
 const getRandomEmployee = function (employeesArray) {
   // TODO: Select and display a random employee
   // creates a var called rand that creates and stores a 
-  // random int between 0 and employeesArray.length - 1
+  // random int >= 0 and < employeesArray.length
   let rand = Math.floor(Math.random() * employeesArray.length);
+  // we use rand as the index to acess our random employee
+  // next we display the employee and an object that can be expanded
   let employee = employeesArray[rand];
   console.log(`Here's random employee${employee.firstName}`);
   console.log(employee);
