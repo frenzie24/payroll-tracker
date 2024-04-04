@@ -1,24 +1,37 @@
 // Get a reference to the #add-employees-btn element
 const addEmployeesBtn = document.querySelector('#add-employees-btn');
+
+// const to make our prompt's more legible
+const promptString = 'Enter employee\'s';
+
 // Collect employee data
 const collectEmployees = function () {
   // TODO: Get user input to create and return an array of employee objects
   let employees = [employeeGenerator()];
-  // stores the response from our confirm
+  /*
+   we create a block level function here to recurvsivly
+   call itself while we build employee data
+   the function returns when the user does not select true 
+  */
   function addMorData() {
     let addMore = confirm("Enter more employees?");
     debugger;
     if (addMore) {
       // if true we call our function again and push the return to the employees array
+      // we used recursion to solve the while loop without using a while loop
       employees.push(employeeGenerator());
       addMorData();
     } else {
       return employees;
     }
   }
+  // addMorData() is called here for the first time to begin building our data with 
+  // recursion
   addMorData();
   return employees;
 }
+
+
 
 // function to check if prompt input is a number, 
 const checkForNumbers = function (input, msg) {
@@ -34,9 +47,11 @@ const checkForLetters = function (input, msg) {
     return checkForLetters(prompt(msg, 'Try again.'));
   } else { return input };
 }
+
 // employee generator using prompts
+// when employeeGenerator is called a 
 employeeGenerator = function () {
-  let promptString = 'Enter employee\'s';
+
   // using string literals to make these lines more legible
   let employee = {
     firstName: checkForLetters(prompt(`${promptString} first name.`, 'First Name')),
