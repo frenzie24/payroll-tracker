@@ -8,6 +8,11 @@ const promptString = 'Enter employee\'s';
 const collectEmployees = function () {
   // TODO: Get user input to create and return an array of employee objects
   let employees = [employeeGenerator()];
+
+  //if the user canceled we return an empty array
+  if (employees[0] == undefined) {
+    return undefined;
+  }
   /*
    we create a block level function here to recurvsivly
    call itself while we build employee data
@@ -20,6 +25,10 @@ const collectEmployees = function () {
       // if true we call our function again and push the return to the employees array
       // we used recursion to solve the while loop without using a while loop
       employees.push(employeeGenerator());
+      if (employees[employees.length - 1] == undefined) {
+        employees.pop();
+        return employees;
+      }
       addMorData();
     } else {
       return employees;
@@ -35,6 +44,7 @@ const collectEmployees = function () {
 
 // function to check if prompt input is a number, 
 const checkForNumbers = function (input, msg) {
+  if (!input) return undefined;   
   input = parseInt(input);
   if (!input) {
     return checkForNumbers(prompt(msg, 'Try again.'));
@@ -43,6 +53,7 @@ const checkForNumbers = function (input, msg) {
 
 // function to check if prompt input is full of letters
 const checkForLetters = function (input, msg) {
+  if (!input) return undefined;   
   if (parseInt(input) || input == "First Name" || input == "Last Name") {
     return checkForLetters(prompt(msg, 'Try again.'));
   } else { return input };
@@ -59,7 +70,8 @@ employeeGenerator = function () {
     salary: checkForNumbers(prompt(`${promptString}  salary.`, 'Salary'),
       'Salary')
   };
-  return employee;
+  if (employee.firstName && employee.lastName && employee.salary) return employee;
+  else return undefined;
 }
 
 // Display the average salary
@@ -81,7 +93,7 @@ const getRandomEmployee = function (employeesArray) {
   // we use rand as the index to acess our random employee
   // next we display the employee and an object that can be expanded
   let employee = employeesArray[rand];
-  console.log(`Here's random employee${employee.firstName}`);
+  console.log(`Here's random employee ${employee.firstName}`);
   console.log(employee);
 
 }
@@ -129,24 +141,25 @@ const displayEmployees = function (employeesArray) {
 
 const trackEmployeeData = function () {
   const employees = collectEmployees();
+  if (employees) {
+    console.table(employees);
 
-  console.table(employees);
+    displayAverageSalary(employees);
 
-  displayAverageSalary(employees);
+    console.log('==============================');
 
-  console.log('==============================');
+    getRandomEmployee(employees);
 
-  getRandomEmployee(employees);
+    employees.sort(function (a, b) {
+      if (a.lastName < b.lastName) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
 
-  employees.sort(function (a, b) {
-    if (a.lastName < b.lastName) {
-      return -1;
-    } else {
-      return 1;
-    }
-  });
-
-  displayEmployees(employees);
+    displayEmployees(employees);
+  }
 }
 
 // Add event listener to 'Add Employees' button
