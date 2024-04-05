@@ -1,3 +1,9 @@
+# Changes to file structure
+
+I reorganized the file structure and edited index.html to reflect changes. 
+Removed all files not related to project submission.
+All code is from topics we have covered in class and my prior experience
+
 # 03 JavaScript: Employee Payroll Tracker
 
 ## Your Task
