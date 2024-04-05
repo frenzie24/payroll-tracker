@@ -1,8 +1,12 @@
 // Get a reference to the #add-employees-btn element
 const addEmployeesBtn = document.querySelector('#add-employees-btn');
 
-// const to make our prompt's more legible
+// consts to make our code more legible
 const promptString = 'Enter employee\'s';
+const fnString = "First Name";
+const lnString = "Last Name";
+const salString = "Salary";
+const tryString = "Try Again.";
 
 // Collect employee data
 const collectEmployees = function () {
@@ -20,22 +24,27 @@ const collectEmployees = function () {
   */
   function addMorData() {
     let addMore = confirm("Enter more employees?");
-    debugger;
+    //### uncomment line below to step through addMorData() ###
+    //debugger;
+    // if the user wants to add more employees we continue
+    // otherwise return employees
     if (addMore) {
-      // if true we call our function again and push the return to the employees array
+      // if true we call our function again and push employeeGenerator() to the employees array
       // we used recursion to solve the while loop without using a while loop
       employees.push(employeeGenerator());
+      // If the last employee was canceled it will be undefined
+      // if so remove last entry from the array and return employees 
       if (employees[employees.length - 1] == undefined) {
         employees.pop();
         return employees;
       }
+      // the last employee added was valid, so we call ourself and begin again
       addMorData();
     } else {
       return employees;
     }
   }
-  // addMorData() is called here for the first time to begin building our data with 
-  // recursion
+  // addMorData() is called here for the first time to begin building our data with recursion
   addMorData();
   return employees;
 }
@@ -44,18 +53,22 @@ const collectEmployees = function () {
 
 // function to check if prompt input is a number, 
 const checkForNumbers = function (input, msg) {
-  if (!input) return undefined;   
+ // if the user cancels we return undefined
+  if (!input) return undefined;
+  // parseInt to check if input is a string or numbers
   input = parseInt(input);
   if (!input) {
-    return checkForNumbers(prompt(msg, 'Try again.'));
+    return checkForNumbers(prompt(msg, tryString));
   } else { return input };
 }
 
 // function to check if prompt input is full of letters
 const checkForLetters = function (input, msg) {
-  if (!input) return undefined;   
-  if (parseInt(input) || input == "First Name" || input == "Last Name") {
-    return checkForLetters(prompt(msg, 'Try again.'));
+  if (!input) return undefined;
+  
+  // parseInt to check if input is a string or numbers and if the user changed the default text
+  if (parseInt(input) || input == fnString || input == lnString) {
+    return checkForLetters(prompt(msg, tryString));
   } else { return input };
 }
 
@@ -65,11 +78,14 @@ employeeGenerator = function () {
 
   // using string literals to make these lines more legible
   let employee = {
-    firstName: checkForLetters(prompt(`${promptString} first name.`, 'First Name')),
-    lastName: checkForLetters(prompt(`${promptString}  last name.`, 'Last Name')),
-    salary: checkForNumbers(prompt(`${promptString}  salary.`, 'Salary'),
-      'Salary')
+    // each property of our employee object is populated by a script level function
+    // this seperate function handles the logic to ensure the user input is valid or has cancelled
+    // the values passed are always the users input followed by the string message
+    firstName: checkForLetters(prompt(`${promptString} ${fnString}.`, fnString), `${promptString} ${fnString}.`),
+    lastName: checkForLetters(prompt(`${promptString}  ${lnString}.`, lnString), `${promptString} ${lnString}.`),
+    salary: checkForNumbers(prompt(`${promptString}  ${salString}.`,salString ), `${promptString} ${salString}.`)
   };
+  // if the empolyee object properties are ALL defined return employee otherwise return undefined
   if (employee.firstName && employee.lastName && employee.salary) return employee;
   else return undefined;
 }
