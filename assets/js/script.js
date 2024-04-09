@@ -30,7 +30,7 @@ const collectEmployees = function () {
     // otherwise return employees
     if (addMore) {
       // if true we call our function again and push employeeGenerator() to the employees array
-      // we used recursion to solve the while loop without using a while loop
+      // we used recursion to solve the loop 
       employees.push(employeeGenerator());
       // If the last employee was canceled it will be undefined
       // if so remove last entry from the array and return employees 
@@ -64,16 +64,17 @@ const checkForNumbers = function (input, msg) {
 
 // function to check if prompt input is full of letters
 const checkForLetters = function (input, msg) {
+  // if the user cancels we return undefined
   if (!input) return undefined;
 
-  // parseInt to check if input is a string or numbers and if the user changed the default text
+  // check if input is a string or numbers then checks if the user changed the default text
   if (parseInt(input) || input == fnString || input == lnString) {
     return checkForLetters(prompt(msg, tryString));
   } else { return input };
 }
 
 // employee generator using prompts
-// when employeeGenerator is called a 
+// when employeeGenerator returns an employee object 
 employeeGenerator = function () {
 
   // using string literals to make these lines more legible
@@ -99,6 +100,10 @@ employeeGenerator = function () {
 }
 
 // Display the average salary
+/*
+  take the summation of every employee's salary and divide by the total # of employee
+  to get average
+*/
 const displayAverageSalary = function (employeesArray) {
   let total = 0.0;
   for (let i = 0; i < employeesArray.length; i++) {
@@ -115,7 +120,7 @@ const getRandomEmployee = function (employeesArray) {
   // random int >= 0 and < employeesArray.length
   let rand = Math.floor(Math.random() * employeesArray.length);
   // we use rand as the index to acess our random employee
-  // next we display the employee and an object that can be expanded
+  // next we log the employee and an object that can be expanded
   let employee = employeesArray[rand];
   console.log(`Here's random employee ${employee.firstName}`);
   console.log(employee);
