@@ -53,7 +53,7 @@ const collectEmployees = function () {
 
 // function to check if prompt input is a number, 
 const checkForNumbers = function (input, msg) {
- // if the user cancels we return undefined
+  // if the user cancels we return undefined
   if (!input) return undefined;
   // parseInt to check if input is a string or numbers
   input = parseInt(input);
@@ -65,7 +65,7 @@ const checkForNumbers = function (input, msg) {
 // function to check if prompt input is full of letters
 const checkForLetters = function (input, msg) {
   if (!input) return undefined;
-  
+
   // parseInt to check if input is a string or numbers and if the user changed the default text
   if (parseInt(input) || input == fnString || input == lnString) {
     return checkForLetters(prompt(msg, tryString));
@@ -77,17 +77,25 @@ const checkForLetters = function (input, msg) {
 employeeGenerator = function () {
 
   // using string literals to make these lines more legible
-  let employee = {
-    // each property of our employee object is populated by a script level function
-    // this seperate function handles the logic to ensure the user input is valid or has cancelled
-    // the values passed are always the users input followed by the string message
-    firstName: checkForLetters(prompt(`${promptString} ${fnString}.`, fnString), `${promptString} ${fnString}.`),
-    lastName: checkForLetters(prompt(`${promptString}  ${lnString}.`, lnString), `${promptString} ${lnString}.`),
-    salary: checkForNumbers(prompt(`${promptString}  ${salString}.`,salString ), `${promptString} ${salString}.`)
-  };
+  let employee = { firstName:'', lastName: '', salary: '' };
+
+   /* each property of our employee object is populated by a script level function
+     this seperate function handles the logic to ensure the user input is valid or has cancelled
+     the values passed are always the users input followed by the string message */
   // if the empolyee object properties are ALL defined return employee otherwise return undefined
-  if (employee.firstName && employee.lastName && employee.salary) return employee;
-  else return undefined;
+  employee.firstName= checkForLetters(prompt(`${promptString} ${fnString}.`, fnString), `${promptString} ${fnString}.`);
+  if (!employee.firstName) {
+    return undefined;
+  }
+  employee.lastName= checkForLetters(prompt(`${promptString} ${lnString}.`, lnString), `${promptString} ${lnString}.`);
+  if (!employee.lastName) {
+    return undefined;
+  }
+  employee.salary = checkForNumbers(prompt(`${promptString} ${salString}.`, salString), `${promptString} ${salString}.`)
+  if (!employee.salary) {
+    return undefined;
+  }
+  return employee;
 }
 
 // Display the average salary
