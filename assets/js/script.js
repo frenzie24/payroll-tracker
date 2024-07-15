@@ -20,7 +20,7 @@ const collectEmployees = function () {
   /*
    we create a block level function here to recurvsivly
    call itself while we build employee data
-   the function returns when the user does not select true 
+   the function returns when the user does not select true
   */
   function addMorData() {
     let addMore = confirm("Enter more employees?");
@@ -30,10 +30,10 @@ const collectEmployees = function () {
     // otherwise return employees
     if (addMore) {
       // if true we call our function again and push employeeGenerator() to the employees array
-      // we used recursion to solve the loop 
+      // we used recursion to solve the loop
       employees.push(employeeGenerator());
       // If the last employee was canceled it will be undefined
-      // if so remove last entry from the array and return employees 
+      // if so remove last entry from the array and return employees
       if (employees[employees.length - 1] == undefined) {
         employees.pop();
         return employees;
@@ -51,7 +51,7 @@ const collectEmployees = function () {
 
 
 
-// function to check if prompt input is a number, 
+// function to check if prompt input is a number,
 const checkForNumbers = function (input, msg) {
   // if the user cancels we return undefined
   if (!input) return undefined;
@@ -74,7 +74,7 @@ const checkForLetters = function (input, msg) {
 }
 
 // employee generator using prompts
-// when employeeGenerator returns an employee object 
+// when employeeGenerator returns an employee object
 employeeGenerator = function () {
 
   // using string literals to make these lines more legible
@@ -116,7 +116,7 @@ const displayAverageSalary = function (employeesArray) {
 // Select a random employee
 const getRandomEmployee = function (employeesArray) {
   // TODO: Select and display a random employee
-  // creates a var called rand that creates and stores a 
+  // creates a var called rand that creates and stores a
   // random int >= 0 and < employeesArray.length
   let rand = Math.floor(Math.random() * employeesArray.length);
   // we use rand as the index to acess our random employee
@@ -127,11 +127,7 @@ const getRandomEmployee = function (employeesArray) {
 
 }
 
-/*
-  ====================
-  STARTER CODE
-  Do not modify any of the code below this line:
-*/
+
 
 // Display employee data in an HTML table
 const displayEmployees = function (employeesArray) {
